@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:counter_button/counter_button.dart';
+import 'package:intl/intl.dart';
+import 'package:puridaily/consumos.dart';
+//clase cosumos api
 
 class Ventas extends StatefulWidget {
   const Ventas({super.key});
@@ -242,14 +245,85 @@ class _MyWidgetState extends State<Ventas> {
               ]),
               Center(
                 child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                    child: Text(
-                      'Total a pagar: \$${((_counter15L * 15) + (_counter10L * 9) + (_counter1L * 3) + (_counterGarrafonRosa * 90) + (_counterBot1L * 12) + (_counterBot500ml * 8)).toStringAsFixed(2)}',
-                      style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.purpleAccent),
-                    )),
+                  padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  child: Text(
+                    'Total a pagar: \$${((_counter15L * 15) + (_counter10L * 9) + (_counter1L * 3) + (_counterGarrafonRosa * 90) + (_counterBot1L * 12) + (_counterBot500ml * 8)).toStringAsFixed(2)}',
+                    style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.purpleAccent),
+                  ),
+                ),
+              ),
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      // Formatea la fecha como dd/MM/yyyy
+                      final String fechaFormateada =
+                          DateFormat('yyyy/MM/dd').format(DateTime.now());
+                      double total = ((_counter15L * 15) +
+                          (_counter10L * 9) +
+                          (_counter1L * 3) +
+                          (_counterGarrafonRosa * 90) +
+                          (_counterBot1L * 12) +
+                          (_counterBot500ml * 8));
+                      int resp = await enviarVenta(fechaFormateada, total);
+                      if (resp != -1) {
+                        int idVenta = resp;
+                        if (_counter15L > 0) {
+                          enviarDetalleVenta(
+                              idVenta, "Relleno 20L", 15, _counter15L);
+                        }
+                        if (_counter10L > 0) {
+                          enviarDetalleVenta(
+                              idVenta, "Relleno 10L", 9, _counter10L);
+                        }
+                        if (_counter1L > 0) {
+                          enviarDetalleVenta(
+                              idVenta, "Relleno 1L", 3, _counter1L);
+                        }
+                        if (_counterGarrafonRosa > 0) {
+                          enviarDetalleVenta(idVenta, "Garrafon Rosa", 90,
+                              _counterGarrafonRosa);
+                        }
+                        if (_counterBot1L > 0) {
+                          enviarDetalleVenta(
+                              idVenta, "Botella 1L", 12, _counterBot1L);
+                        }
+                        if (_counterBot500ml > 0) {
+                          enviarDetalleVenta(
+                              idVenta, "Botella 500ml", 8, _counterBot500ml);
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Error al enviar la venta.'),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
+                      // Reinicia los contadores
+                      setState(() {
+                        _counter15L = 0;
+                        _counter10L = 0;
+                        _counter1L = 0;
+                        _counterGarrafonRosa = 0;
+                        _counterBot1L = 0;
+                        _counterBot500ml = 0;
+                      });
+                      // Muestra un mensaje de éxito
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Venta registrada correctamente.'),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    },
+                    child: Text('Enviar venta'),
+                  ),
+                ),
               )
             ],
           ),
