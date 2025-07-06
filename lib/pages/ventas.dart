@@ -171,22 +171,22 @@ class _VentasState extends State<Ventas> {
     if (resp != -1) {
       int idVenta = resp;
       if (_counter20L > 0) {
-        enviarDetalleVenta(idVenta, "Relleno 20L", 15, _counter20L);
+        enviarDetalleVenta(idVenta, "Relleno 20L", _specialPrice20L > 0 ? _specialPrice20L.toDouble() : 15.0, _counter20L);
       }
       if (_counter10L > 0) {
-        enviarDetalleVenta(idVenta, "Relleno 10L", 9, _counter10L);
+        enviarDetalleVenta(idVenta, "Relleno 10L", _specialPrice10L > 0 ? _specialPrice20L.toDouble(): 9.0, _counter10L);
       }
       if (_counter1L > 0) {
-        enviarDetalleVenta(idVenta, "Relleno 1L", 3, _counter1L);
+        enviarDetalleVenta(idVenta, "Relleno 1L", _specialPrice1L > 0 ? _specialPrice1L.toDouble(): 3.0, _counter1L);
       }
       if (_counterGarrafonRosa > 0) {
-        enviarDetalleVenta(idVenta, "Garrafon Rosa", 90, _counterGarrafonRosa);
+        enviarDetalleVenta(idVenta, "Garrafon Rosa", _specialPriceGarrafonRosa > 0 ? _specialPriceGarrafonRosa.toDouble() : 90.0, _counterGarrafonRosa);
       }
       if (_counterBot1L > 0) {
-        enviarDetalleVenta(idVenta, "Botella 1L", 12, _counterBot1L);
+        enviarDetalleVenta(idVenta, "Botella 1L", _specialPriceBot1L > 0 ? _specialPriceBot1L.toDouble() : 12.0, _counterBot1L);
       }
       if (_counterBot500ml > 0) {
-        enviarDetalleVenta(idVenta, "Botella 500ml", 8, _counterBot500ml);
+        enviarDetalleVenta(idVenta, "Botella 500ml", _specialPriceBot500ml > 0 ? _specialPriceBot500ml.toDouble() : 8.0, _counterBot500ml);
       }
       // Reiniciar contadores
       setState(() {
