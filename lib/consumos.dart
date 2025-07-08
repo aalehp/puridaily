@@ -5,7 +5,7 @@ String ip = "http://129.146.42.34:3000/"; // Define la IP del servidor
 
 
 //funcion ventas
-Future<int> enviarVenta(String fecha, double importe) async {
+Future<int> enviarVenta(String fecha, double importe, String fechaCreacion) async {
   final url = Uri.parse('${ip}ventas');
 
   final response = await http.post(
@@ -15,7 +15,8 @@ Future<int> enviarVenta(String fecha, double importe) async {
     },
     body: jsonEncode({
       "fech_venta": fecha,
-      "imp_venta": importe
+      "imp_venta": importe,
+      "fech_creacion": fechaCreacion,
     }),
   );  
 

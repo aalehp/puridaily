@@ -166,8 +166,9 @@ class _VentasState extends State<Ventas> {
 
   Future<void> enviarVentaYDetalles() async {
     final fechaFormateada = DateFormat('yyyy/MM/dd').format(DateTime.now());
+    final fechaCreacion = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
     double total = calcularTotal();
-    int resp = await enviarVenta(fechaFormateada, total);
+    int resp = await enviarVenta(fechaFormateada, total, fechaCreacion);
     if (resp != -1) {
       int idVenta = resp;
       if (_counter20L > 0) {
