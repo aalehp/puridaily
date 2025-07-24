@@ -11,6 +11,7 @@ class Ventas extends StatefulWidget {
 }
 
 class _VentasState extends State<Ventas> {
+  int _counterPromo3x38 = 0;
   int _counter20L = 0;
   int _counter10L = 0;
   int _counter1L = 0;
@@ -18,6 +19,7 @@ class _VentasState extends State<Ventas> {
   int _counterBot1L = 0;
   int _counterBot500ml = 0;
 
+  double _specialPricePromo3x38 = 0;
   double _specialPrice20L = 0;
   double _specialPrice1L = 0;
   double _specialPrice10L = 0;
@@ -26,6 +28,7 @@ class _VentasState extends State<Ventas> {
   double _specialPriceBot500ml = 0;
 
   double calcularTotal() {
+  double precioPromo3x38 = _specialPricePromo3x38 > 0 ? _specialPricePromo3x38.toDouble() : 38.0;
   double precio20L = _specialPrice20L > 0 ? _specialPrice20L.toDouble() : 15.0;
   double precio10L = _specialPrice10L > 0 ? _specialPrice10L.toDouble() : 9.0;
   double precio1L = _specialPrice1L > 0 ? _specialPrice1L.toDouble() : 3.0;
@@ -37,7 +40,9 @@ class _VentasState extends State<Ventas> {
       ? _specialPriceBot500ml.toDouble()
       : 8.0;
 
-    return (_counter20L *  precio20L +
+    return (
+            _counterPromo3x38 * precioPromo3x38 +
+            _counter20L *  precio20L +
             _counter10L * precio10L +
             _counter1L * precio1L +
             _counterGarrafonRosa * precioGarrafonRosa +
@@ -72,6 +77,9 @@ class _VentasState extends State<Ventas> {
                 if (val >= 0) {
                   setState(() {
                     switch (nombre) {
+                      case 'Promo 3x38':
+                        _counterPromo3x38 = val;
+                        break;
                       case 'Relleno 20L':
                         _counter20L = val;
                         break;
@@ -135,6 +143,9 @@ class _VentasState extends State<Ventas> {
                     if (precioEspecial != null) {
                       setState(() {
                         switch (nombre) {
+                          case 'Promo 3x38':
+                            _specialPricePromo3x38 = precioEspecial.toDouble();
+                            break;
                           case 'Relleno 20L':
                             _specialPrice20L = precioEspecial.toDouble();
                             break;
@@ -171,6 +182,9 @@ class _VentasState extends State<Ventas> {
     int resp = await enviarVenta(fechaFormateada, total, fechaCreacion);
     if (resp != -1) {
       int idVenta = resp;
+      if (_counterPromo3x38 > 0) {
+        enviarDetalleVenta(idVenta, "Promo 3x38", _specialPricePromo3x38 > 0 ? _specialPricePromo3x38.toDouble() : 38.0, _counterPromo3x38);
+      }
       if (_counter20L > 0) {
         enviarDetalleVenta(idVenta, "Relleno 20L", _specialPrice20L > 0 ? _specialPrice20L.toDouble() : 15.0, _counter20L);
       }
@@ -191,6 +205,7 @@ class _VentasState extends State<Ventas> {
       }
       // Reiniciar contadores
       setState(() {
+        _counterPromo3x38 = 0;
         _counter20L = 0;
         _counter10L = 0;
         _counter1L = 0;
@@ -234,6 +249,9 @@ class _VentasState extends State<Ventas> {
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                   children: [
+                    if(DateTime.now().weekday == 2) // Martes
+                      buildProductoCard('Promo 3x38', 38.0, _counterPromo3x38,
+                          (val) => setState(() => _counterPromo3x38 = val)),
                     buildProductoCard('Relleno 20L', 15.0, _counter20L,
                         (val) => setState(() => _counter20L = val)),
                     buildProductoCard('Relleno 10L', 9.0, _counter10L,
