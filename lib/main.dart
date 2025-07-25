@@ -5,6 +5,7 @@ import 'package:puridaily/pages/cuentasPendientes.dart';
 import 'package:puridaily/pages/homeScreen.dart';
 import 'package:puridaily/pages/registrolitros.dart';
 import 'package:puridaily/pages/ventas.dart';
+import 'package:puridaily/pages/ventasListView.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
         '/regLitros': (context) => RegistroLitros(),
         '/bitEnvios': (context) => BitacoraEnvios(),
         '/cuentasPend': (context) => CuentasPendientes(),
-        '/calRecolecciones':(context) => CalendarioRecoleccion()
+        '/calRecolecciones':(context) => CalendarioRecoleccion(),
+        '/ventasListView': (context) => VentasListView()
       },
     );
   }

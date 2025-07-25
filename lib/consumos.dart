@@ -49,3 +49,14 @@ Future<void> enviarDetalleVenta(int idVenta, String producto, double precioUni, 
     }),
   );
 }
+
+Future<List<dynamic>> obtenerVentasHoy() async {
+  final url = Uri.parse('${ip}ventas-hoy');
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    return jsonDecode(response.body);
+  } else {
+    throw Exception('Error al cargar ventas');
+  }
+}

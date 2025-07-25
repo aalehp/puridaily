@@ -68,7 +68,7 @@ class _VentasState extends State<Ventas> {
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.indigo)),
+                    color: Colors.teal[600])),
             Text('Precio: \$${precio.toStringAsFixed(2)}',
                 style: TextStyle(fontSize: 14, color: Colors.grey[700])),
             CounterButton(
@@ -104,8 +104,8 @@ class _VentasState extends State<Ventas> {
               },
               count: contador,
               countColor: const Color.fromARGB(255, 0, 0, 0),
-              buttonColor: Colors.indigo,
-              progressColor: Colors.indigoAccent,
+              buttonColor: Colors.teal,
+              progressColor: Colors.teal,
             ),
             SizedBox(
                 width: 140,
@@ -117,7 +117,7 @@ class _VentasState extends State<Ventas> {
                       color: Colors.indigo,
                       fontWeight: FontWeight.bold),
                   decoration: InputDecoration(
-                    prefixIconColor: Colors.indigo,
+                    prefixIconColor: Colors.teal[600],
                     prefixIcon: Icon(Icons.attach_money, size: 15),
                     filled: false,
                     fillColor: Colors.white,
@@ -241,7 +241,7 @@ class _VentasState extends State<Ventas> {
                   style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: Colors.indigo)),
+                      color: Colors.teal[600])),
               SizedBox(height: 20),
               Expanded(
                 child: GridView.count(
@@ -275,11 +275,11 @@ class _VentasState extends State<Ventas> {
                   style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: Colors.green[700])),
+                      color: Colors.teal[600])),
               SizedBox(height: 20),
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                  backgroundColor: Colors.teal[600],
                   foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                   shape: RoundedRectangleBorder(
@@ -292,6 +292,15 @@ class _VentasState extends State<Ventas> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/ventasListView');
+        },
+        child: Icon(Icons.view_list_rounded),
+        backgroundColor: Colors.teal[600],
+        tooltip: 'Ver Ventas',
+        foregroundColor: Colors.white,
       ),
     );
   }
